@@ -1,0 +1,38 @@
+{
+	"schemaVersion": 1,
+	"id": "fluid",
+	"version": "${version}",
+	"name": "Fluid",
+	"description": "Support dynamic fluid bucket and fluid cell, support the addition of new fluids",
+	"authors": [
+		"ZurrTum"
+	],
+	"contact": {
+		"homepage": "",
+		"sources": ""
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/fluid/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.zurrtum.fluid.FluidMod"
+		],
+		"client": [
+			"com.zurrtum.fluid.FluidModClient"
+		]
+	},
+	"mixins": [
+		"fluid.mixins.json",
+		{
+			"config": "fluid.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.16.10",
+		"minecraft": ">=1.21.5-",
+		"java": ">=21",
+		"fabric-api": ">=0.118.6"
+	}
+}

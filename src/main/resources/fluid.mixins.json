@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "com.zurrtum.fluid.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "BucketItemMixin",
+    "TagGroupLoaderMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+	}
+}

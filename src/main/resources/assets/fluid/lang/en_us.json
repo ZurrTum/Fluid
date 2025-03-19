@@ -1,0 +1,6 @@
+{
+  "fluid.item_group": "Fluid Bucket",
+  "item.fluid.cell": "Empty Cell",
+  "item.minecraft.water_cell": "Water Cell",
+  "item.minecraft.lava_cell": "Lava Cell"
+}

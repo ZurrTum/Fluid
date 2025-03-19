@@ -1,0 +1,6 @@
+{
+  "fluid.item_group": "流體罐",
+  "item.fluid.cell": "空罐",
+  "item.minecraft.water_cell": "水罐",
+  "item.minecraft.lava_cell": "熔岩罐"
+}

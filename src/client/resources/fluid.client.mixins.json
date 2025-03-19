@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "com.zurrtum.fluid.mixin.client",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "BackgroundRendererMixin",
+    "BlockStatesLoaderMixin",
+    "EntityMixin",
+    "ItemAssetsLoaderMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
