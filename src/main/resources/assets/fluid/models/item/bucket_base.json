@@ -1,15 +1,135 @@
 {
   "elements": [
     {
+      "from": [4.0, 11.0, 7.5],
+      "to": [12.0, 13.0, 8.5],
+      "faces": {
+        "north": {
+          "texture": "#layer0",
+          "uv": [4.0, 3.0, 12.0, 5.0]
+        },
+        "south": {
+          "texture": "#layer0",
+          "uv": [4.0, 3.0, 12.0, 5.0]
+        }
+      }
+    },
+    {
+      "from": [5.0, 10.0, 7.5],
+      "to": [11.0, 11.0, 8.5],
+      "faces": {
+        "north": {
+          "texture": "#layer0",
+          "uv": [5.0, 5.0, 11.0, 6.0]
+        },
+        "south": {
+          "texture": "#layer0",
+          "uv": [5.0, 5.0, 11.0, 6.0]
+        }
+      }
+    },
+    {
+      "from": [3.0, 11.0, 7.5],
+      "to": [4.0, 12.0, 8.5],
+      "faces": {
+        "north": {
+          "texture": "#layer0",
+          "uv": [12.0, 4.0, 13.0, 5.0]
+        },
+        "south": {
+          "texture": "#layer0",
+          "uv": [12.0, 4.0, 13.0, 5.0]
+        }
+      }
+    },
+    {
+      "from": [12.0, 11.0, 7.5],
+      "to": [13.0, 12.0, 8.5],
+      "faces": {
+        "north": {
+          "texture": "#layer0",
+          "uv": [3.0, 4.0, 4.0, 5.0]
+        },
+        "south": {
+          "texture": "#layer0",
+          "uv": [3.0, 4.0, 4.0, 5.0]
+        }
+      }
+    },
+    {
+      "from": [4.0, 11.0, 7.5],
+      "to": [12.0, 13.0, 8.5],
+      "faces": {
+        "north": {
+          "texture": "#fluid",
+          "tintindex": 0,
+          "uv": [4.0, 3.0, 12.0, 5.0]
+        },
+        "south": {
+          "texture": "#fluid",
+          "tintindex": 0,
+          "uv": [4.0, 3.0, 12.0, 5.0]
+        }
+      }
+    },
+    {
+      "from": [5.0, 10.0, 7.5],
+      "to": [11.0, 11.0, 8.5],
+      "faces": {
+        "north": {
+          "texture": "#fluid",
+          "tintindex": 0,
+          "uv": [5.0, 5.0, 11.0, 6.0]
+        },
+        "south": {
+          "texture": "#fluid",
+          "tintindex": 0,
+          "uv": [5.0, 5.0, 11.0, 6.0]
+        }
+      }
+    },
+    {
+      "from": [3.0, 11.0, 7.5],
+      "to": [4.0, 12.0, 8.5],
+      "faces": {
+        "north": {
+          "texture": "#fluid",
+          "tintindex": 0,
+          "uv": [12.0, 4.0, 13.0, 5.0]
+        },
+        "south": {
+          "texture": "#fluid",
+          "tintindex": 0,
+          "uv": [12.0, 4.0, 13.0, 5.0]
+        }
+      }
+    },
+    {
+      "from": [12.0, 11.0, 7.5],
+      "to": [13.0, 12.0, 8.5],
+      "faces": {
+        "north": {
+          "texture": "#fluid",
+          "tintindex": 0,
+          "uv": [3.0, 4.0, 4.0, 5.0]
+        },
+        "south": {
+          "texture": "#fluid",
+          "tintindex": 0,
+          "uv": [3.0, 4.0, 4.0, 5.0]
+        }
+      }
+    },
+    {
       "from": [0.0, 0.0, 7.5],
       "to": [16.0, 16.0, 8.5],
       "faces": {
         "north": {
-          "texture": "layer0",
+          "texture": "#layer1",
           "uv": [16.0, 0.0, 0.0, 16.0]
         },
         "south": {
-          "texture": "layer0",
+          "texture": "#layer1",
           "uv": [0.0, 0.0, 16.0, 16.0]
         }
       }
@@ -19,7 +139,7 @@
       "to": [11.0, 15.0, 8.5],
       "faces": {
         "up": {
-          "texture": "layer0",
+          "texture": "#layer1",
           "uv": [5.0, 1.0, 11.0, 2.0]
         }
       }
@@ -29,7 +149,7 @@
       "to": [5.0, 1.0, 8.5],
       "faces": {
         "east": {
-          "texture": "layer0",
+          "texture": "#layer1",
           "uv": [5.0, 15.0, 6.0, 1.0]
         }
       }
@@ -39,7 +159,7 @@
       "to": [11.0, 1.0, 8.5],
       "faces": {
         "west": {
-          "texture": "layer0",
+          "texture": "#layer1",
           "uv": [10.0, 15.0, 11.0, 1.0]
         }
       }
@@ -49,7 +169,7 @@
       "to": [13.0, 14.0, 8.5],
       "faces": {
         "up": {
-          "texture": "layer0",
+          "texture": "#layer1",
           "uv": [3.0, 2.0, 13.0, 3.0]
         }
       }
@@ -59,7 +179,7 @@
       "to": [3.0, 3.0, 8.5],
       "faces": {
         "east": {
-          "texture": "layer0",
+          "texture": "#layer1",
           "uv": [3.0, 13.0, 4.0, 2.0]
         }
       }
@@ -69,7 +189,7 @@
       "to": [12.0, 13.0, 8.5],
       "faces": {
         "down": {
-          "texture": "layer0",
+          "texture": "#layer1",
           "uv": [4.0, 2.0, 12.0, 3.0]
         }
       }
@@ -79,7 +199,7 @@
       "to": [13.0, 3.0, 8.5],
       "faces": {
         "west": {
-          "texture": "layer0",
+          "texture": "#layer1",
           "uv": [12.0, 13.0, 13.0, 2.0]
         }
       }
@@ -89,7 +209,7 @@
       "to": [14.0, 13.0, 8.5],
       "faces": {
         "up": {
-          "texture": "layer0",
+          "texture": "#layer1",
           "uv": [2.0, 3.0, 14.0, 4.0]
         }
       }
@@ -99,7 +219,7 @@
       "to": [2.0, 5.0, 8.5],
       "faces": {
         "east": {
-          "texture": "layer0",
+          "texture": "#layer1",
           "uv": [2.0, 11.0, 3.0, 3.0]
         }
       }
@@ -109,7 +229,7 @@
       "to": [13.0, 12.0, 8.5],
       "faces": {
         "down": {
-          "texture": "layer0",
+          "texture": "#layer1",
           "uv": [3.0, 3.0, 13.0, 4.0]
         }
       }
@@ -119,7 +239,7 @@
       "to": [4.0, 12.0, 8.5],
       "faces": {
         "west": {
-          "texture": "layer0",
+          "texture": "#layer1",
           "uv": [3.0, 4.0, 4.0, 3.0]
         }
       }
@@ -129,7 +249,7 @@
       "to": [12.0, 12.0, 8.5],
       "faces": {
         "east": {
-          "texture": "layer0",
+          "texture": "#layer1",
           "uv": [12.0, 4.0, 13.0, 3.0]
         }
       }
@@ -139,7 +259,7 @@
       "to": [14.0, 5.0, 8.5],
       "faces": {
         "west": {
-          "texture": "layer0",
+          "texture": "#layer1",
           "uv": [13.0, 11.0, 14.0, 3.0]
         }
       }
@@ -149,7 +269,7 @@
       "to": [3.0, 11.0, 8.5],
       "faces": {
         "west": {
-          "texture": "layer0",
+          "texture": "#layer1",
           "uv": [2.0, 5.0, 3.0, 4.0]
         }
       }
@@ -159,7 +279,7 @@
       "to": [13.0, 11.0, 8.5],
       "faces": {
         "east": {
-          "texture": "layer0",
+          "texture": "#layer1",
           "uv": [13.0, 5.0, 14.0, 4.0]
         }
       }
@@ -169,7 +289,7 @@
       "to": [13.0, 11.0, 8.5],
       "faces": {
         "up": {
-          "texture": "layer0",
+          "texture": "#layer1",
           "uv": [3.0, 5.0, 13.0, 6.0]
         }
       }
@@ -179,7 +299,7 @@
       "to": [5.0, 10.0, 8.5],
       "faces": {
         "west": {
-          "texture": "layer0",
+          "texture": "#layer1",
           "uv": [4.0, 6.0, 5.0, 5.0]
         }
       }
@@ -189,7 +309,7 @@
       "to": [11.0, 10.0, 8.5],
       "faces": {
         "east": {
-          "texture": "layer0",
+          "texture": "#layer1",
           "uv": [11.0, 6.0, 12.0, 5.0]
         }
       }
@@ -199,7 +319,7 @@
       "to": [11.0, 10.0, 8.5],
       "faces": {
         "up": {
-          "texture": "layer0",
+          "texture": "#layer1",
           "uv": [5.0, 6.0, 11.0, 7.0]
         }
       }
@@ -209,7 +329,7 @@
       "to": [14.0, 5.0, 8.5],
       "faces": {
         "down": {
-          "texture": "layer0",
+          "texture": "#layer1",
           "uv": [2.0, 10.0, 14.0, 11.0]
         }
       }
@@ -219,7 +339,7 @@
       "to": [13.0, 3.0, 8.5],
       "faces": {
         "down": {
-          "texture": "layer0",
+          "texture": "#layer1",
           "uv": [3.0, 12.0, 13.0, 13.0]
         }
       }
@@ -229,7 +349,7 @@
       "to": [12.0, 2.0, 8.5],
       "faces": {
         "down": {
-          "texture": "layer0",
+          "texture": "#layer1",
           "uv": [4.0, 13.0, 12.0, 14.0]
         }
       }
@@ -239,7 +359,7 @@
       "to": [4.0, 2.0, 8.5],
       "faces": {
         "east": {
-          "texture": "layer0",
+          "texture": "#layer1",
           "uv": [4.0, 14.0, 5.0, 13.0]
         }
       }
@@ -249,7 +369,7 @@
       "to": [12.0, 2.0, 8.5],
       "faces": {
         "west": {
-          "texture": "layer0",
+          "texture": "#layer1",
           "uv": [11.0, 14.0, 12.0, 13.0]
         }
       }
@@ -259,7 +379,7 @@
       "to": [11.0, 1.0, 8.5],
       "faces": {
         "down": {
-          "texture": "layer0",
+          "texture": "#layer1",
           "uv": [5.0, 14.0, 11.0, 15.0]
         }
       }
@@ -290,7 +410,9 @@
     }
   },
   "textures": {
-    "layer0": "fluid:item/bucket_base",
+    "layer0": "fluid:item/bucket_background",
+    "fluid": "#layer0",
+    "layer1": "fluid:item/bucket_base",
     "particle": "fluid:item/bucket_base"
   },
   "gui_light": "front"

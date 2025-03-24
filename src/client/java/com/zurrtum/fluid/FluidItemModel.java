@@ -75,12 +75,10 @@ public class FluidItemModel implements ItemModel {
             ).apply(instance, factory));
         }
 
-        private final Identifier background;
-        private final List<Identifier> cover;
+        private final Identifier base;
         private final Fluid fluid;
-        Unbaked(Identifier background, List<Identifier> cover, Fluid fluid) {
-            this.background = background;
-            this.cover = cover;
+        Unbaked(Identifier base, Fluid fluid) {
+            this.base = base;
             this.fluid = fluid;
         }
 
@@ -90,70 +88,45 @@ public class FluidItemModel implements ItemModel {
 
         @Override
         public void resolve(Resolver resolver) {
-            resolver.markDependency(background);
-            cover.forEach(resolver::markDependency);
+            resolver.markDependency(base);
         }
 
         @Override
         public ItemModel bake(ItemModel.BakeContext context) {
             Baker baker = context.blockModelBaker();
-            BakedSimpleModel backgroundModel = baker.getModel(background);
-            List<BakedQuad> backgroundQuads = backgroundModel.bakeGeometry(backgroundModel.getTextures(), baker, ModelRotation.X0_Y0).getAllQuads();
-            List<BakedQuad> coverQuads = new ArrayList<>();
-            BakedSimpleModel[] models = new BakedSimpleModel[cover.size()];
-            ModelTextures[] textures = new ModelTextures[cover.size()];
-            for (int i = 0; i < cover.size(); i++) {
-                Identifier id = cover.get(i);
-                models[i] = baker.getModel(id);
-                textures[i] = models[i].getTextures();
-                coverQuads.addAll(models[i].bakeGeometry(textures[i], baker, ModelRotation.X0_Y0).getAllQuads());
-            }
-            ModelSettings modelSettings = ModelSettings.resolveSettings(baker, models[0], textures[0]);
+            BakedSimpleModel model = baker.getModel(base);
+            ModelTextures modelTextures = model.getTextures();
+            ModelSettings modelSettings = ModelSettings.resolveSettings(baker, model, modelTextures);
             return new FluidItemModel(modelSettings, () -> {
-                List<BakedQuad> list = new ArrayList<>(backgroundQuads);
                 Pair<Sprite, Integer> pair = parseFluid(fluid);
-                if (pair != null) {
-                    list.addAll(bakeFluidQuads(baker, backgroundModel, pair));
-                    list.addAll(coverQuads);
-                    return Triple.of(list, bakeVector(list), pair.getRight());
+                Sprite sprite = pair.getLeft();
+                ModelTextures textures;
+                if (sprite != null) {
+                    SpriteIdentifier texture = new SpriteIdentifier(sprite.getAtlasId(), sprite.getContents().getId());
+                    textures = new ModelTextures.Builder()
+                        .addLast(new ModelTextures.Textures.Builder().addSprite("fluid", texture).build())
+                        .addLast(model.getModel().textures()).build(model);
                 } else {
-                    list.addAll(coverQuads);
-                    return Triple.of(list, bakeVector(list), -1);
+                    textures = modelTextures;
                 }
+                List<BakedQuad> list = model.getGeometry().bake(textures, baker, ModelRotation.X0_Y0, model).getAllQuads();
+                return Triple.of(list, bakeVector(list), pair.getRight());
             });
         }
 
-        @Nullable
         public static Pair<Sprite, Integer> parseFluid(Fluid fluid) {
             FluidRenderHandler handler = FluidRenderHandlerRegistry.INSTANCE.get(fluid);
             if (handler == null) {
-                return null;
+                return Pair.of(null, -1);
             }
             MinecraftClient client = MinecraftClient.getInstance();
             if (client.player == null) {
-                return null;
+                return Pair.of(null, -1);
             }
             FluidState state = fluid.getDefaultState();
             int tint = handler.getFluidColor(client.world, client.player.getBlockPos(), state) | 0xFF000000;
             Sprite sprite = handler.getFluidSprites(client.world, BlockPos.ORIGIN, state)[0];
             return Pair.of(sprite, tint);
-        }
-
-        public static List<BakedQuad> bakeFluidQuads(Baker baker, BakedSimpleModel model, Pair<Sprite, Integer> pair) {
-            Sprite sprite = pair.getLeft();
-            SpriteIdentifier texture = new SpriteIdentifier(sprite.getAtlasId(), sprite.getContents().getId());
-            ModelTextures.Textures textures = new ModelTextures.Textures.Builder()
-                    .addSprite(TextureKey.TEXTURE.getName(), texture).build();
-            ModelTextures sprites = new ModelTextures.Builder().addLast(textures).build(null);
-            List<BakedQuad> quads = model.getGeometry().bake(sprites, baker, ModelRotation.X0_Y0, model).getAllQuads();
-            if (pair.getRight() == -1) {
-                return quads;
-            }
-            List<BakedQuad> list = new ArrayList<>(quads.size());
-            for (BakedQuad quad : quads) {
-                list.add(new BakedQuad(quad.vertexData(), 0, quad.face(), quad.sprite(), quad.shade(), quad.lightEmission()));
-            }
-            return list;
         }
 
         public static Supplier<Vector3f[]> bakeVector(List<BakedQuad> quads) {
