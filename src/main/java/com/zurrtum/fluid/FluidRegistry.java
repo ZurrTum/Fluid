@@ -34,6 +34,8 @@ public class FluidRegistry {
         entry.flowing_texture = FluidEntry.WATER_FLOWING;
         entry.overlay_texture = FluidEntry.WATER_OVERLAY;
         DataRegistry.registerWaterState(entry.still);
+        DataRegistry.registerWaterTag(entry.still);
+        DataRegistry.registerWaterTag(entry.flowing);
         return register(id, entry, AbstractBlock.Settings.copy(Blocks.WATER), tint);
     }
 
@@ -44,6 +46,8 @@ public class FluidRegistry {
         entry.still_texture = FluidEntry.LAVA_STILL;
         entry.flowing_texture = FluidEntry.LAVA_FLOWING;
         DataRegistry.registerLavaState(entry.still);
+        DataRegistry.registerLavaTag(entry.still);
+        DataRegistry.registerLavaTag(entry.flowing);
         return register(id, entry, AbstractBlock.Settings.copy(Blocks.LAVA), tint);
     }
 

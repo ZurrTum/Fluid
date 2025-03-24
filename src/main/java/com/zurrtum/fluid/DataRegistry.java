@@ -11,7 +11,9 @@ import java.util.stream.Collectors;
 
 public class DataRegistry {
     private static final Set<Fluid> WATER_STATES_LIST = new HashSet<>();
+    private static final Set<Fluid> WATER_TAG_LIST = new HashSet<>();
     private static final Set<Fluid> LAVA_STATES_LIST = new HashSet<>();
+    private static final Set<Fluid> LAVA_TAG_LIST = new HashSet<>();
     private static final Set<Fluid> BUCKET_MODELS_LIST = new HashSet<>();
     private static final Set<Fluid> CELL_MODELS_LIST = new HashSet<>();
 
@@ -19,8 +21,16 @@ public class DataRegistry {
         WATER_STATES_LIST.add(fluid);
     }
 
+    public static void registerWaterTag(Fluid fluid) {
+        WATER_TAG_LIST.add(fluid);
+    }
+
     public static void registerLavaState(Fluid fluid) {
         LAVA_STATES_LIST.add(fluid);
+    }
+
+    public static void registerLavaTag(Fluid fluid) {
+        LAVA_TAG_LIST.add(fluid);
     }
 
     public static void registerBucketModel(Fluid fluid) {
@@ -106,13 +116,13 @@ public class DataRegistry {
 
     public static void changeFluidTags(List<Resource> waters, List<Resource> lavas) {
         if (!waters.isEmpty()) {
-            Resource resource = getFluidTags(WATER_STATES_LIST);
+            Resource resource = getFluidTags(WATER_TAG_LIST);
             if (resource != null) {
                 waters.add(resource);
             }
         }
         if (!lavas.isEmpty()) {
-            Resource resource = getFluidTags(LAVA_STATES_LIST);
+            Resource resource = getFluidTags(LAVA_TAG_LIST);
             if (resource != null) {
                 lavas.add(resource);
             }
