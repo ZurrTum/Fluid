@@ -78,13 +78,12 @@ public class DataRegistry {
             );
         });
         CELL_MODELS_LIST.forEach(fluid -> {
-            Identifier id, key;
+            Identifier id = Registries.FLUID.getId(fluid);
+            Identifier key;
             if (fluid != Fluids.EMPTY) {
-                id = Registries.FLUID.getId(fluid);
                 key = id.withPath(name -> "items/" + name + "_cell.json");
             } else {
-                id = Registries.ITEM.getId(FluidMod.CELL_EMPTY);
-                key = id.withPath(name -> "items/" + name + ".json");
+                key = Registries.ITEM.getId(FluidMod.CELL_EMPTY).withPath(name -> "items/" + name + ".json");
             }
             map.put(key, getFluidModel(FluidMod.CELL_MODEL_ID, id));
         });
