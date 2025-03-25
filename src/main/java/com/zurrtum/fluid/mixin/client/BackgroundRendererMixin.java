@@ -27,8 +27,7 @@ package com.zurrtum.fluid.mixin.client;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import com.zurrtum.fluid.FluidEntry;
-import com.zurrtum.fluid.FluidRegistry;
+import com.zurrtum.fluid.impl.DataRegistryImpl;
 import net.minecraft.client.render.BackgroundRenderer;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.world.ClientWorld;
@@ -45,9 +44,9 @@ public class BackgroundRendererMixin {
 	)
 	private static int getWaterFogColor(Biome biome, Operation<Integer> original, @Local(argsOnly = true) Camera camera, @Local(argsOnly = true) ClientWorld world) {
 		FluidState fluidState = world.getFluidState(camera.getBlockPos());
-		FluidEntry entry = FluidRegistry.FLUID.get(fluidState.getFluid());
-		if (entry != null) {
-			return entry.tint;
+		Integer tint = DataRegistryImpl.TINT_LIST.get(fluidState.getFluid());
+		if (tint != null) {
+			return tint;
 		}
 		return original.call(biome);
 	}

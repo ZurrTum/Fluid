@@ -26,9 +26,8 @@ package com.zurrtum.fluid.mixin.client;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.zurrtum.fluid.FluidEntry;
-import com.zurrtum.fluid.FluidMod;
-import com.zurrtum.fluid.FluidRegistry;
+import com.zurrtum.fluid.impl.DataRegistryImpl;
+import com.zurrtum.fluid.impl.FluidMod;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.entity.Entity;
@@ -75,11 +74,11 @@ public class EntityMixin {
 				mutable.set(x, y, z);
 				FluidState fluidState = world.getFluidState(mutable);
 				if (fluidState.isIn(FluidTags.WATER)) {
-					FluidEntry entry = FluidRegistry.FLUID.get(fluidState.getFluid());
-					if (entry != null) {
-						particleRed = (entry.tint >> 16 & 0xFF) / 255.0F;
-						particleGreen = (entry.tint >> 8 & 0xFF) / 255.0F;
-						particleBlue = (entry.tint & 0xFF) / 255.0F;
+					Integer tint = DataRegistryImpl.TINT_LIST.get(fluidState.getFluid());
+					if (tint != null) {
+						particleRed = (tint >> 16 & 0xFF) / 255.0F;
+						particleGreen = (tint >> 8 & 0xFF) / 255.0F;
+						particleBlue = (tint & 0xFF) / 255.0F;
 					} else {
 						particleRed = -1;
 					}

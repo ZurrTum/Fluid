@@ -3,9 +3,8 @@ package com.zurrtum.fluid.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import com.zurrtum.fluid.FluidEntry;
-import com.zurrtum.fluid.FluidMod;
-import com.zurrtum.fluid.FluidRegistry;
+import com.zurrtum.fluid.impl.DataRegistryImpl;
+import com.zurrtum.fluid.impl.FluidMod;
 import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.fluid.Fluid;
@@ -28,13 +27,7 @@ public class BucketItemMixin {
     private ItemStack tryDrainFluid(FluidDrainable instance, LivingEntity livingEntity, WorldAccess worldAccess, BlockPos blockPos, BlockState blockState, Operation<ItemStack> original, @Local ItemStack stack) {
         if (stack.getItem() == FluidMod.CELL_EMPTY && blockState.get(FluidBlock.LEVEL) == 0) {
             Fluid fluid = worldAccess.getFluidState(blockPos).getFluid();
-            Item cell = FluidRegistry.COMPAT_CELL.get(fluid);
-            if (cell == null) {
-                FluidEntry entry = FluidRegistry.FLUID.get(fluid);
-                if (entry != null) {
-                    cell = entry.cell;
-                }
-            }
+            Item cell = DataRegistryImpl.CELL_LIST.get(fluid);
             if (cell != null) {
                 worldAccess.setBlockState(blockPos, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL_AND_REDRAW);
                 return new ItemStack(cell);
@@ -47,13 +40,9 @@ public class BucketItemMixin {
     private static ItemStack getEmptiedStack(ItemConvertible item, Operation<ItemStack> original, @Local(argsOnly = true) ItemStack stack) {
         if (stack.getItem() instanceof BucketItem bucket) {
             Fluid fluid = ((BucketItemMixin)(Object) bucket).fluid;
-            if (FluidRegistry.COMPAT_CELL.get(fluid) == bucket) {
+            Item cell = DataRegistryImpl.CELL_LIST.get(fluid);
+            if (cell == bucket) {
                 return new ItemStack(FluidMod.CELL_EMPTY);
-            } else {
-                FluidEntry entry = FluidRegistry.FLUID.get(fluid);
-                if (entry != null && entry.cell == bucket) {
-                    return new ItemStack(FluidMod.CELL_EMPTY);
-                }
             }
         }
         return original.call(item);

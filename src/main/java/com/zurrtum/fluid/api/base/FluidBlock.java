@@ -1,4 +1,4 @@
-package com.zurrtum.fluid;
+package com.zurrtum.fluid.api.base;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

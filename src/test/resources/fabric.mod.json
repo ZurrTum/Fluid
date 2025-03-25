@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "testmod",
+  "name": "Test Mod",
+  "version": "1.0.0",
+  "environment": "*",
+  "license": "CC0-1.0",
+  "entrypoints": {
+    "main": [
+      "com.zurrtum.fluid.test.TestMod"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.10",
+    "minecraft": ">=1.21.5-",
+    "java": ">=21",
+    "fabric-api": ">=0.118.6"
+  }
+}

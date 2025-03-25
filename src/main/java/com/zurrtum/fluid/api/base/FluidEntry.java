@@ -1,4 +1,4 @@
-package com.zurrtum.fluid;
+package com.zurrtum.fluid.api.base;
 
 import net.minecraft.block.FluidBlock;
 import net.minecraft.fluid.FlowableFluid;
@@ -9,7 +9,6 @@ public class FluidEntry {
     public FlowableFluid flowing = null;
     public FlowableFluid still = null;
     public BucketItem bucket = null;
-    public BucketItem cell = null;
     public FluidBlock block = null;
     public int tint = -1;
     public Identifier still_texture = null;

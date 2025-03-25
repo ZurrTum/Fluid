@@ -1,4 +1,4 @@
-package com.zurrtum.fluid;
+package com.zurrtum.fluid.impl;
 
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.MapCodec;
@@ -6,12 +6,12 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.data.TextureKey;
 import net.minecraft.client.item.ItemModelManager;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.TexturedRenderLayers;
 import net.minecraft.client.render.item.ItemRenderState;
 import net.minecraft.client.render.item.model.ItemModel;
+import net.minecraft.client.render.item.model.ItemModelTypes;
 import net.minecraft.client.render.model.*;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.SpriteIdentifier;
@@ -29,19 +29,22 @@ import org.apache.commons.lang3.tuple.Triple;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import static com.zurrtum.fluid.impl.FluidMod.MOD_ID;
+import static com.zurrtum.fluid.impl.FluidMod.CELL_MODEL_ID;
+import static com.zurrtum.fluid.impl.FluidMod.BUCKET_MODEL_ID;
+
 public class FluidItemModel implements ItemModel {
     private final RenderLayer layer;
     private final ModelSettings settings;
     private final Supplier<Triple<List<BakedQuad>, Supplier<Vector3f[]>, Integer>> bake;
 
-    public FluidItemModel(ModelSettings modelSettings, Supplier<Triple<List<BakedQuad>, Supplier<Vector3f[]>, Integer>> quadsProvider) {
+    FluidItemModel(ModelSettings modelSettings, Supplier<Triple<List<BakedQuad>, Supplier<Vector3f[]>, Integer>> quadsProvider) {
         layer = TexturedRenderLayers.getItemEntityTranslucentCull();
         settings = modelSettings;
         bake = Suppliers.memoize(quadsProvider::get);
@@ -66,8 +69,8 @@ public class FluidItemModel implements ItemModel {
         settings.addSettings(layerRenderState, displayContext);
     }
 
-    public static abstract class Unbaked implements ItemModel.Unbaked {
-        public static <T extends Unbaked> MapCodec<T> getCodec(Function<Fluid, T> factory) {
+    static abstract class Unbaked implements ItemModel.Unbaked {
+        static <T extends Unbaked> MapCodec<T> getCodec(Function<Fluid, T> factory) {
             return RecordCodecBuilder.mapCodec(
             instance -> instance.group(
                     Identifier.CODEC.xmap(Registries.FLUID::get, Registries.FLUID::getId)
@@ -82,7 +85,7 @@ public class FluidItemModel implements ItemModel {
             this.fluid = fluid;
         }
 
-        public Fluid getFluid() {
+        private Fluid getFluid() {
             return fluid;
         }
 
@@ -114,7 +117,7 @@ public class FluidItemModel implements ItemModel {
             });
         }
 
-        public static Pair<Sprite, Integer> parseFluid(Fluid fluid) {
+        private static Pair<Sprite, Integer> parseFluid(Fluid fluid) {
             FluidRenderHandler handler = FluidRenderHandlerRegistry.INSTANCE.get(fluid);
             if (handler == null) {
                 return Pair.of(null, -1);
@@ -129,7 +132,7 @@ public class FluidItemModel implements ItemModel {
             return Pair.of(sprite, tint);
         }
 
-        public static Supplier<Vector3f[]> bakeVector(List<BakedQuad> quads) {
+        private static Supplier<Vector3f[]> bakeVector(List<BakedQuad> quads) {
             Set<Vector3f> set = new HashSet<>();
             for (BakedQuad bakedQuad : quads) {
                 BakedQuadFactory.calculatePosition(bakedQuad.vertexData(), set::add);
@@ -137,5 +140,34 @@ public class FluidItemModel implements ItemModel {
             Vector3f[] vector = set.toArray(Vector3f[]::new);
             return () -> vector;
         }
+    }
+
+    private static class CellUnbaked extends Unbaked {
+        public static final MapCodec<CellUnbaked> CODEC = getCodec(CellUnbaked::new);
+        public CellUnbaked(Fluid fluid) {
+            super(Identifier.of(MOD_ID, "item/cell_base"), fluid);
+        }
+
+        @Override
+        public MapCodec<CellUnbaked> getCodec() {
+            return CODEC;
+        }
+    }
+
+    private static class BucketUnbaked extends Unbaked {
+        public static final MapCodec<BucketUnbaked> CODEC = getCodec(BucketUnbaked::new);
+        public BucketUnbaked(Fluid fluid) {
+            super(Identifier.of(MOD_ID, "item/bucket_base"), fluid);
+        }
+
+        @Override
+        public MapCodec<BucketUnbaked> getCodec() {
+            return CODEC;
+        }
+    }
+
+    protected static void register() {
+        ItemModelTypes.ID_MAPPER.put(CELL_MODEL_ID, CellUnbaked.CODEC);
+        ItemModelTypes.ID_MAPPER.put(BUCKET_MODEL_ID, BucketUnbaked.CODEC);
     }
 }

@@ -1,4 +1,4 @@
-package com.zurrtum.fluid;
+package com.zurrtum.fluid.api.base;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -15,39 +15,39 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 
 public abstract class LavaFluid extends net.minecraft.fluid.LavaFluid {
-    private final FluidEntry manage;
+    private final FluidEntry entry;
     LavaFluid(FluidEntry manage) {
-        this.manage = manage;
+        this.entry = manage;
     }
 
     @Override
     public Fluid getFlowing() {
-        return manage.flowing;
+        return entry.flowing;
     }
 
     @Override
     public Fluid getStill() {
-        return manage.still;
+        return entry.still;
     }
 
     @Override
     public Item getBucketItem() {
-        return manage.bucket;
+        return entry.bucket;
     }
 
     @Override
     public BlockState toBlockState(FluidState state) {
-        return manage.block.getDefaultState().with(FluidBlock.LEVEL, getBlockStateLevel(state));
+        return entry.block.getDefaultState().with(FluidBlock.LEVEL, getBlockStateLevel(state));
     }
 
     @Override
     public boolean matchesType(Fluid fluid) {
-        return fluid == manage.still || fluid == manage.flowing;
+        return fluid == entry.still || fluid == entry.flowing;
     }
 
     public static class Flowing extends LavaFluid {
-        Flowing(FluidEntry manage) {
-            super(manage);
+        public Flowing(FluidEntry entry) {
+            super(entry);
         }
 
         @Override
@@ -58,7 +58,7 @@ public abstract class LavaFluid extends net.minecraft.fluid.LavaFluid {
 
         @Override
         public int getLevel(FluidState state) {
-            return (Integer)state.get(LEVEL);
+            return state.get(LEVEL);
         }
 
         @Override
@@ -68,8 +68,8 @@ public abstract class LavaFluid extends net.minecraft.fluid.LavaFluid {
     }
 
     public static class Still extends LavaFluid {
-        Still(FluidEntry manage) {
-            super(manage);
+        public Still(FluidEntry entry) {
+            super(entry);
         }
 
         @Override

@@ -2,7 +2,7 @@ package com.zurrtum.fluid.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.zurrtum.fluid.DataRegistry;
+import com.zurrtum.fluid.impl.DataRegistryImpl;
 import net.minecraft.registry.tag.TagGroupLoader;
 import net.minecraft.resource.Resource;
 import net.minecraft.util.Identifier;
@@ -31,7 +31,7 @@ public class TagGroupLoaderMixin {
     @WrapOperation(method = "loadTags(Lnet/minecraft/resource/ResourceManager;)Ljava/util/Map;", at = @At(value = "INVOKE", target = "Ljava/util/Map;entrySet()Ljava/util/Set;"))
     private Set<Map.Entry<Identifier, List<Resource>>> loadTags(Map<Identifier, List<Resource>> instance, Operation<Set<Map.Entry<Identifier, List<Resource>>>> original) {
         if (this.dataType.equals(fluidType)) {
-            DataRegistry.changeFluidTags(instance.get(water), instance.get(lava));
+            DataRegistryImpl.changeFluidTags(instance.get(water), instance.get(lava));
         }
         return original.call(instance);
     }

@@ -16,18 +16,14 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.zurrtum.fluid.FluidMod"
+			"com.zurrtum.fluid.impl.FluidMod"
 		],
 		"client": [
-			"com.zurrtum.fluid.FluidModClient"
+			"com.zurrtum.fluid.impl.FluidClient"
 		]
 	},
 	"mixins": [
-		"fluid.mixins.json",
-		{
-			"config": "fluid.client.mixins.json",
-			"environment": "client"
-		}
+		"fluid.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.16.10",
