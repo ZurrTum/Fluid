@@ -29,6 +29,8 @@ Registry.register(Registries.BLOCK, id, entry.block);
 ```
 - Dynamic registration (or use json file)
 ```java
+import com.zurrtum.fluid.api.DataRegistry;
+
 DataRegistry.registerWaterState(entry.still);
 DataRegistry.registerWaterTag(entry.still);
 DataRegistry.registerWaterTag(entry.flowing);
