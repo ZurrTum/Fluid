@@ -8,8 +8,8 @@
 		"ZurrTum"
 	],
 	"contact": {
-		"homepage": "",
-		"sources": ""
+		"homepage": "https://github.com/ZurrTum/Fluid",
+		"sources": "https://github.com/ZurrTum/Fluid"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/fluid/icon.png",
