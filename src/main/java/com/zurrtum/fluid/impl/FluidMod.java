@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.*;
+import net.minecraft.particle.ParticleType;
 import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -21,8 +22,13 @@ public class FluidMod implements ModInitializer {
     public static final Identifier BUCKET_MODEL_ID = Identifier.of(MOD_ID, "model/bucket");
     public static final SimpleParticleType SPLASH = FabricParticleTypes.simple();
     public static final SimpleParticleType BUBBLE = FabricParticleTypes.simple();
+    public static final ParticleType<ColorParticleEffect> PARTICLE = FabricParticleTypes.complex(
+        ColorParticleEffect.CODEC, ColorParticleEffect.PACKET_CODEC
+    );
     public static final Item CELL_EMPTY = FluidRegistryImpl.registerCell(Fluids.EMPTY, CELL_ID);
-    public static final RegistryKey<ItemGroup> ITEM_GROUP = RegistryKey.of(RegistryKeys.ITEM_GROUP, Identifier.of(MOD_ID, "item_group"));
+    public static final RegistryKey<ItemGroup> ITEM_GROUP = RegistryKey.of(
+        RegistryKeys.ITEM_GROUP, Identifier.of(MOD_ID, "item_group")
+    );
 
     @Override
     public void onInitialize() {

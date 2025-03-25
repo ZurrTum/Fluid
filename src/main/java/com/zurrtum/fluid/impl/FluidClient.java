@@ -15,6 +15,7 @@ public class FluidClient implements ClientModInitializer {
     public void onInitializeClient() {
         FluidItemModel.register();
         ParticleFactoryRegistry particle = ParticleFactoryRegistry.getInstance();
+        particle.register(FluidMod.PARTICLE, new ColorParticleEffect.Factory());
         particle.register(FluidMod.SPLASH, WaterSplashParticle.SplashFactory::new);
         particle.register(FluidMod.BUBBLE, WaterBubbleParticle.Factory::new);
         ClientLifecycleEvents.CLIENT_STARTED.register(client -> {

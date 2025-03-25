@@ -1,5 +1,6 @@
 package com.zurrtum.fluid.api.base;
 
+import com.zurrtum.fluid.impl.ColorParticleEffect;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FluidBlock;
@@ -7,12 +8,14 @@ import net.minecraft.block.FluidFillable;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class LavaFluid extends net.minecraft.fluid.LavaFluid {
     private final FluidEntry entry;
@@ -38,6 +41,11 @@ public abstract class LavaFluid extends net.minecraft.fluid.LavaFluid {
     @Override
     public BlockState toBlockState(FluidState state) {
         return entry.block.getDefaultState().with(FluidBlock.LEVEL, getBlockStateLevel(state));
+    }
+
+    @Override
+    public @Nullable ParticleEffect getParticle() {
+        return ColorParticleEffect.create(super.getParticle(), entry.tint);
     }
 
     @Override

@@ -26,14 +26,11 @@ package com.zurrtum.fluid.mixin.client;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.zurrtum.fluid.impl.ColorParticleEffect;
 import com.zurrtum.fluid.impl.DataRegistryImpl;
-import com.zurrtum.fluid.impl.FluidMod;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.particle.Particle;
 import net.minecraft.entity.Entity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -53,11 +50,7 @@ public class EntityMixin {
 	@Shadow
 	private Box boundingBox;
 	@Unique
-	private float particleRed = -1;
-	@Unique
-	private float particleGreen = -1;
-	@Unique
-	private float particleBlue = -1;
+	private int tint;
 
 	@Inject(method = "onSwimmingStart()V", at = @At("HEAD"))
 	private void refreshParticleColor(CallbackInfo ci) {
@@ -74,36 +67,17 @@ public class EntityMixin {
 				mutable.set(x, y, z);
 				FluidState fluidState = world.getFluidState(mutable);
 				if (fluidState.isIn(FluidTags.WATER)) {
-					Integer tint = DataRegistryImpl.TINT_LIST.get(fluidState.getFluid());
-					if (tint != null) {
-						particleRed = (tint >> 16 & 0xFF) / 255.0F;
-						particleGreen = (tint >> 8 & 0xFF) / 255.0F;
-						particleBlue = (tint & 0xFF) / 255.0F;
-					} else {
-						particleRed = -1;
-					}
+					tint = DataRegistryImpl.TINT_LIST.getOrDefault(fluidState.getFluid(), -1);
 					return;
 				}
 			}
 		}
+		tint = -1;
 	}
 
 	@WrapOperation(method = "onSwimmingStart()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;addParticleClient(Lnet/minecraft/particle/ParticleEffect;DDDDDD)V"))
 	private void addParticle(World world, ParticleEffect parameters, double x, double y, double z, double velocityX, double velocityY, double velocityZ, Operation<Void> original) {
 		if (!world.isClient) return;
-		if (particleRed == -1) {
-			original.call(world, parameters, x, y, z, velocityX, velocityY, velocityZ);
-			return;
-		}
-
-		if (parameters == ParticleTypes.BUBBLE) {
-			parameters = FluidMod.BUBBLE;
-		} else if (parameters == ParticleTypes.SPLASH) {
-			parameters = FluidMod.SPLASH;
-		}
-		Particle particle = MinecraftClient.getInstance().particleManager.addParticle(parameters, x, y, z, velocityX, velocityY, velocityZ);
-		if (particle != null) {
-			particle.setColor(particleRed, particleGreen, particleBlue);
-		}
+		original.call(world, ColorParticleEffect.create(parameters, tint), x, y, z, velocityX, velocityY, velocityZ);
 	}
 }

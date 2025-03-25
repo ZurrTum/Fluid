@@ -6,7 +6,10 @@
     "client.BackgroundRendererMixin",
     "client.BlockStatesLoaderMixin",
     "client.EntityMixin",
-    "client.ItemAssetsLoaderMixin"
+    "client.ItemAssetsLoaderMixin",
+    "client.ParticleContinuousFallingMixin",
+    "client.ParticleDrippingLavaMixin",
+    "client.ParticleDrippingMixin"
   ],
   "mixins": [
     "BucketItemMixin",
