@@ -13,7 +13,8 @@
   ],
   "mixins": [
     "BucketItemMixin",
-    "TagGroupLoaderMixin"
+    "TagGroupLoaderMixin",
+    "client.PointedDripstoneBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1
