@@ -1,6 +1,7 @@
 package com.zurrtum.fluid.api.base;
 
 import com.zurrtum.fluid.impl.ColorParticleEffect;
+import com.zurrtum.fluid.impl.DataRegistryImpl;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FluidBlock;
@@ -45,7 +46,7 @@ public abstract class LavaFluid extends net.minecraft.fluid.LavaFluid {
 
     @Override
     public @Nullable ParticleEffect getParticle() {
-        return ColorParticleEffect.create(super.getParticle(), entry.tint);
+        return ColorParticleEffect.create(super.getParticle(), DataRegistryImpl.TINT_LIST.getOrDefault(entry.still, entry.tint));
     }
 
     @Override
