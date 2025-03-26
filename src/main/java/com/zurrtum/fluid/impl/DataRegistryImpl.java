@@ -67,7 +67,7 @@ public class DataRegistryImpl {
             }
           }
         }
-        """.trim(), type));
+        """, type));
     }
 
     public static void changeBlockStates(Map<Identifier, List<Resource>> map) {
