@@ -52,13 +52,13 @@ public class FluidItemModel implements ItemModel {
 
     @Override
     public void update(
-            ItemRenderState state,
-            ItemStack stack,
-            ItemModelManager resolver,
-            ItemDisplayContext displayContext,
-            @Nullable ClientWorld world,
-            @Nullable LivingEntity user,
-            int seed
+        ItemRenderState state,
+        ItemStack stack,
+        ItemModelManager resolver,
+        ItemDisplayContext displayContext,
+        @Nullable ClientWorld world,
+        @Nullable LivingEntity user,
+        int seed
     ) {
         ItemRenderState.LayerRenderState layerRenderState = state.newLayer();
         layerRenderState.setRenderLayer(layer);

@@ -28,8 +28,14 @@ public class TagGroupLoaderMixin {
     @Unique
     private static final Identifier lava = Identifier.ofVanilla("tags/fluid/lava.json");
 
-    @WrapOperation(method = "loadTags(Lnet/minecraft/resource/ResourceManager;)Ljava/util/Map;", at = @At(value = "INVOKE", target = "Ljava/util/Map;entrySet()Ljava/util/Set;"))
-    private Set<Map.Entry<Identifier, List<Resource>>> loadTags(Map<Identifier, List<Resource>> instance, Operation<Set<Map.Entry<Identifier, List<Resource>>>> original) {
+    @WrapOperation(
+        method = "loadTags(Lnet/minecraft/resource/ResourceManager;)Ljava/util/Map;",
+        at = @At(value = "INVOKE", target = "Ljava/util/Map;entrySet()Ljava/util/Set;")
+    )
+    private Set<Map.Entry<Identifier, List<Resource>>> loadTags(
+        Map<Identifier, List<Resource>> instance,
+        Operation<Set<Map.Entry<Identifier, List<Resource>>>> original
+    ) {
         if (this.dataType.equals(fluidType)) {
             DataRegistryImpl.changeFluidTags(instance.get(water), instance.get(lava));
         }

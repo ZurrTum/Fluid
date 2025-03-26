@@ -75,8 +75,17 @@ public class EntityMixin {
 		tint = -1;
 	}
 
-	@WrapOperation(method = "onSwimmingStart()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;addParticleClient(Lnet/minecraft/particle/ParticleEffect;DDDDDD)V"))
-	private void addParticle(World world, ParticleEffect parameters, double x, double y, double z, double velocityX, double velocityY, double velocityZ, Operation<Void> original) {
+	@WrapOperation(
+		method = "onSwimmingStart()V",
+		at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;addParticleClient(Lnet/minecraft/particle/ParticleEffect;DDDDDD)V")
+	)
+	private void addParticle(
+		World world,
+		ParticleEffect parameters,
+		double x, double y, double z,
+		double velocityX, double velocityY, double velocityZ,
+		Operation<Void> original
+	) {
 		if (!world.isClient) return;
 		original.call(world, ColorParticleEffect.create(parameters, tint), x, y, z, velocityX, velocityY, velocityZ);
 	}

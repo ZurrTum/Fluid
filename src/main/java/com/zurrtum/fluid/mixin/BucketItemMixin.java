@@ -23,7 +23,10 @@ import org.spongepowered.asm.mixin.injection.At;
 public class BucketItemMixin {
     @Shadow @Final private Fluid fluid;
 
-    @WrapOperation(method = "use(Lnet/minecraft/world/World;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/FluidDrainable;tryDrainFluid(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/world/WorldAccess;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)Lnet/minecraft/item/ItemStack;"))
+    @WrapOperation(
+        method = "use(Lnet/minecraft/world/World;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;",
+        at = @At(value = "INVOKE", target = "Lnet/minecraft/block/FluidDrainable;tryDrainFluid(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/world/WorldAccess;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)Lnet/minecraft/item/ItemStack;")
+    )
     private ItemStack tryDrainFluid(FluidDrainable instance, LivingEntity livingEntity, WorldAccess worldAccess, BlockPos blockPos, BlockState blockState, Operation<ItemStack> original, @Local ItemStack stack) {
         if (stack.getItem() == FluidMod.CELL_EMPTY && blockState.get(FluidBlock.LEVEL) == 0) {
             Fluid fluid = worldAccess.getFluidState(blockPos).getFluid();
@@ -36,7 +39,10 @@ public class BucketItemMixin {
         return original.call(instance, livingEntity, worldAccess, blockPos, blockState);
     }
 
-    @WrapOperation(method = "getEmptiedStack(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/player/PlayerEntity;)Lnet/minecraft/item/ItemStack;", at = @At(value = "NEW", target = "Lnet/minecraft/item/ItemStack;"))
+    @WrapOperation(
+        method = "getEmptiedStack(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/player/PlayerEntity;)Lnet/minecraft/item/ItemStack;",
+        at = @At(value = "NEW", target = "Lnet/minecraft/item/ItemStack;")
+    )
     private static ItemStack getEmptiedStack(ItemConvertible item, Operation<ItemStack> original, @Local(argsOnly = true) ItemStack stack) {
         if (stack.getItem() instanceof BucketItem bucket) {
             Fluid fluid = ((BucketItemMixin)(Object) bucket).fluid;

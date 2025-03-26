@@ -18,8 +18,20 @@ public class PointedDripstoneBlockMixin {
         method = "createParticle(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;Lnet/minecraft/fluid/Fluid;)V",
         at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;addParticleClient(Lnet/minecraft/particle/ParticleEffect;DDDDDD)V")
     )
-    private static void addParticle(World world, ParticleEffect parameters, double x, double y, double z, double velocityX, double velocityY, double velocityZ, Operation<Void> original, @Local(argsOnly = true) Fluid fluid) {
+    private static void addParticle(
+        World world,
+        ParticleEffect parameters,
+        double x, double y, double z,
+        double velocityX, double velocityY, double velocityZ,
+        Operation<Void> original,
+        @Local(argsOnly = true) Fluid fluid
+    ) {
         if (!world.isClient) return;
-        original.call(world, ColorParticleEffect.create(parameters, DataRegistryImpl.TINT_LIST.getOrDefault(fluid, -1)), x, y, z, velocityX, velocityY, velocityZ);
+        original.call(
+            world,
+            ColorParticleEffect.create(parameters, DataRegistryImpl.TINT_LIST.getOrDefault(fluid, -1)),
+            x, y, z,
+            velocityX, velocityY, velocityZ
+        );
     }
 }

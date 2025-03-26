@@ -42,7 +42,12 @@ public class BackgroundRendererMixin {
 		method = "getFogColor(Lnet/minecraft/client/render/Camera;FLnet/minecraft/client/world/ClientWorld;IF)Lorg/joml/Vector4f;",
 		at = @At(value = "INVOKE", target = "Lnet/minecraft/world/biome/Biome;getWaterFogColor()I")
 	)
-	private static int getWaterFogColor(Biome biome, Operation<Integer> original, @Local(argsOnly = true) Camera camera, @Local(argsOnly = true) ClientWorld world) {
+	private static int getWaterFogColor(
+		Biome biome,
+		Operation<Integer> original,
+		@Local(argsOnly = true) Camera camera,
+		@Local(argsOnly = true) ClientWorld world
+	) {
 		FluidState fluidState = world.getFluidState(camera.getBlockPos());
 		Integer tint = DataRegistryImpl.TINT_LIST.get(fluidState.getFluid());
 		if (tint != null) {

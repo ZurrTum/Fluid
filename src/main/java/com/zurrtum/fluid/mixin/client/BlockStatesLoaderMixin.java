@@ -17,8 +17,15 @@ import java.util.function.Function;
 
 @Mixin(BlockStatesLoader.class)
 public class BlockStatesLoaderMixin {
-    @WrapOperation(method = "load(Lnet/minecraft/resource/ResourceManager;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;", at = @At(value = "INVOKE", target = "Ljava/util/concurrent/CompletableFuture;thenCompose(Ljava/util/function/Function;)Ljava/util/concurrent/CompletableFuture;"))
-    private static CompletableFuture<BlockStatesLoader.LoadedModels> loadBlockStates(CompletableFuture<Map<Identifier, List<Resource>>> instance, Function<Map<Identifier, List<Resource>>, CompletionStage<BlockStatesLoader.LoadedModels>> fn, Operation<CompletableFuture<BlockStatesLoader.LoadedModels>> original) {
+    @WrapOperation(
+        method = "load(Lnet/minecraft/resource/ResourceManager;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+        at = @At(value = "INVOKE", target = "Ljava/util/concurrent/CompletableFuture;thenCompose(Ljava/util/function/Function;)Ljava/util/concurrent/CompletableFuture;")
+    )
+    private static CompletableFuture<BlockStatesLoader.LoadedModels> loadBlockStates(
+        CompletableFuture<Map<Identifier, List<Resource>>> instance,
+        Function<Map<Identifier, List<Resource>>, CompletionStage<BlockStatesLoader.LoadedModels>> fn,
+        Operation<CompletableFuture<BlockStatesLoader.LoadedModels>> original
+    ) {
         return original.call(instance, (Function<Map<Identifier, List<Resource>>, CompletionStage<BlockStatesLoader.LoadedModels>>) (map -> {
             DataRegistryImpl.changeBlockStates(map);
             return fn.apply(map);
