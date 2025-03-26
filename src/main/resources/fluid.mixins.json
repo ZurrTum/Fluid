@@ -9,12 +9,13 @@
     "client.ItemAssetsLoaderMixin",
     "client.ParticleContinuousFallingMixin",
     "client.ParticleDrippingLavaMixin",
-    "client.ParticleDrippingMixin"
+    "client.ParticleDrippingMixin",
+    "client.PointedDripstoneBlockMixin",
+    "client.WaterFluidMixin"
   ],
   "mixins": [
     "BucketItemMixin",
-    "TagGroupLoaderMixin",
-    "client.PointedDripstoneBlockMixin"
+    "TagGroupLoaderMixin"
   ],
   "injectors": {
     "defaultRequire": 1
